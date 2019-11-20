@@ -1,0 +1,40 @@
+version: "3.7"
+services:
+
+  pg:
+    container_name: pg
+    image: postgres:11
+    volumes:
+      - postgres:/var/lib/postgresql/data
+      - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+      - ./.pgpass:/root/.pgpass
+    ports:
+     - 5433:5432
+    environment:
+     - POSTGRES_USER=postgres
+     - POSTGRES_PASSWORD=postgres
+
+  dbt:
+    container_name: dbt
+    build:
+      context: https://github.com/davidgasquez/dbt-docker.git
+      args:
+        gitcommithash: 6f51858
+    image: dbt:0.14.4
+    working_dir: /dbt
+    volumes:
+      - $PWD:/dbt
+      - ./.pgpass:/root/.pgpass
+      - ./profiles.yml:/root/.dbt/profiles.yml
+    environment:
+     - POSTGRES_USER=postgres
+     - POSTGRES_PASSWORD=postgres
+    depends_on:
+      - pg
+    stdin_open: true
+    tty: true
+    command: /bin/bash
+
+volumes:
+  postgres:
+    external: false
