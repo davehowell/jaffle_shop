@@ -26,6 +26,21 @@ $ dbt seed
 $ dbt run
 ```
 
+### Using the Jinja REPL
+
+From the dbt container you can launch the Jinja REPL to try out snippets and syntax
+
+```sh
+$ python /jinrepl/jinrepl.py
+
+```
+An alias has been added to the container so at an interactive bash shell you can just do
+
+```sh
+$ jinrepl
+```
+
+
 ### Connecting directly to the database
 
 * Running `psql` on the postgres container
@@ -42,6 +57,7 @@ $ docker exec -it pg psql -U postgres
 ```sh
 $ export PGPASSFILE='.pgpass' psql -h localhost -p 5433 -U postgres
 ```
+
 
 
 ### clean up
