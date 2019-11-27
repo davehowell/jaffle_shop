@@ -46,16 +46,16 @@ $ jinrepl
 * Running `psql` on the postgres container
 _password not required because `trust` in unix land_
 ```sh
-$ docker exec -it pg psql -U postgres
+$ docker exec -it pg psql -U alice -d jaffle_shop
 ```
 
-* Running *`psql` from the host container
+* Running `psql` from the host container
     * `~/.pgpass` is the awesome, normally I would use that, but 
      for the purposes of this demo temporarily point to a different location for it, because the real one contains secrets
     * needs chmod 600
     * The `docker-compose` file maps ports 5433:5432 because you may already be using the default port on your host. I know I am.
 ```sh
-$ export PGPASSFILE='.pgpass' psql -h localhost -p 5433 -U postgres
+$ export PGPASSFILE='.pgpass' && psql -h localhost -p 5433 -U alice -d jaffle_shop
 ```
 
 
